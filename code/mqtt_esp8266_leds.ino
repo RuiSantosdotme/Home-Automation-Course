@@ -42,8 +42,8 @@ void setup_wifi() {
 }
 
 // This functions is executed when some device publishes a message to a topic that your ESP8266 is subscribed to
-// Change the function below to add login to your program, so when a device publishes a message ta a topic that 
-// your ESP8266 is subscribed you can do something
+// Change the function below to add logic to your program, so when a device publishes a message to a topic that 
+// your ESP8266 is subscribed you can actually do something
 void callback(String topic, byte* message, unsigned int length) {
   Serial.print("Message arrived on topic: ");
   Serial.print(topic);
