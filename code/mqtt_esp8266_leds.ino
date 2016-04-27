@@ -107,7 +107,7 @@ void reconnect() {
   }
 }
 
-// The setup function sets your ESP GPIOs to Outputs, starts the serial communication at baud at baud rate of 115200
+// The setup function sets your ESP GPIOs to Outputs, starts the serial communication at a baud rate of 115200
 // Sets your mqtt broker and sets the callback function
 // The callback function is what receives messages and actually controls the LEDs
 void setup() {
@@ -120,7 +120,8 @@ void setup() {
   client.setCallback(callback);
 }
 
-// For this project, you don't need to change anything in the loop function. Basically it ensures that you ESP is connected to your broker
+// For this project, you don't need to change anything in the loop function. 
+// Basically it ensures that you ESP is connected to your broker
 void loop() {
 
   if (!client.connected()) {
