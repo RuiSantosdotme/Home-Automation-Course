@@ -64,11 +64,13 @@ void callback(String topic, byte* message, unsigned int length) {
       Serial.print("Changing Desk Light to ");
       if(messageTemp == "1"){
         // Sends binary code to turn on Desk Light
+        // BINARY CODE EXAMPLE. REPLACE WITH YOUR BINARY CODE
         mySwitch.send("000101010101000101010101");
         Serial.print("On");
       }
       else if(messageTemp == "0"){
         // Sends binary code to turn off Desk Light
+        // BINARY CODE EXAMPLE. REPLACE WITH YOUR BINARY CODE
         mySwitch.send("000101010101000101010100");
         Serial.print("Off");
       }
@@ -77,11 +79,13 @@ void callback(String topic, byte* message, unsigned int length) {
       Serial.print("Changing Workbench Light to ");
       if(messageTemp == "1"){
         // Sends binary code to turn on Workbench Light
+        // BINARY CODE EXAMPLE. REPLACE WITH YOUR BINARY CODE
         mySwitch.send("000101010101010001010101");
         Serial.print("On");
       }
       else if(messageTemp == "0"){
         // Sends binary code to turn off Workbench Light
+        // BINARY CODE EXAMPLE. REPLACE WITH YOUR BINARY CODE
         mySwitch.send("000101010101010001010100");
         Serial.print("Off");
       }
