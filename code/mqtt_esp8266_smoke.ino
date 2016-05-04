@@ -89,9 +89,9 @@ void callback(String topic, byte* message, unsigned int length) {
 
   // Feel free to add more if statements to control more GPIOs with MQTT
 
-  // If a message is received on the topic home/office/esp1/gpio2, you check if the message is either 1 or 0. Turns the ESP GPIO according to the message
+  // If a message is received on the topic home/office/esp1/desk, you check if the message is either 1 or 0. Turns the Desk outlet according to the message
   if(topic=="home/office/esp1/desk"){
-      Serial.print("Changing GPIO 2 to ");
+      Serial.print("Changing Desk light to ");
       if(messageTemp == "1"){
         mySwitch.send("000101010101000101010101");
         Serial.print("On");
@@ -102,7 +102,7 @@ void callback(String topic, byte* message, unsigned int length) {
       }
   }
   if(topic=="home/office/esp1/workbench"){
-      Serial.print("Changing GPIO 5 to ");
+      Serial.print("Changing Workbench light to ");
       if(messageTemp == "1"){
         mySwitch.send("000101010101010001010101");
         Serial.print("On");
