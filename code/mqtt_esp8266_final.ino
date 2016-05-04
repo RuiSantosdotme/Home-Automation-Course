@@ -191,6 +191,15 @@ void reconnect() {
   }
 }
 
+// Checks motion
+void detectsMovement() {
+  if (armMotion && !motionTriggered) {
+    Serial.println("MOTION DETECTED!!!");
+    motionTriggered = true;
+    client.publish("home/office/esp1/motion/notification", "MOTION DETECTED");
+  }
+}
+
 // The setup function sets your ESP GPIOs to Outputs, starts the serial communication at a baud rate of 115200
 // Sets your mqtt broker and sets the callback function
 // The callback function is what receives messages and actually controls the LEDs
@@ -278,14 +287,5 @@ void loop() {
         client.publish("home/office/esp1/smoke/notification", "SMOKE DETECTED");
       }
     }
-  }
-}
-
-// Checks motion
-void detectsMovement() {
-  if (armMotion && !motionTriggered) {
-    Serial.println("MOTION DETECTED!!!");
-    motionTriggered = true;
-    client.publish("home/office/esp1/motion/notification", "MOTION DETECTED");
   }
 }
