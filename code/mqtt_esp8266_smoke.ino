@@ -238,7 +238,7 @@ void loop() {
   if (now - lastSmokeCheck > 200) {
     lastSmokeCheck = now;  
     int smokeValue = analogRead(smokePin);
-    if (smokeValue > 70){
+    if (smokeValue > smokeThres){
       Serial.print("Pin A0: ");
       Serial.println(smokeValue);
       tone(buzzerPin, 1000, 200);  
