@@ -112,7 +112,6 @@ void reconnect() {
       // You can subscribe to more topics (to control more LEDs in this example)
       client.subscribe("home/office/esp1/desk");
       client.subscribe("home/office/esp1/workbench");
-      client.subscribe("home/office/esp1/top");
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
