@@ -237,11 +237,11 @@ void loop() {
   if (now - lastSmokeCheck > 200) {
     lastSmokeCheck = now;  
     int smokeValue = analogRead(smokePin);
-    if (smokeValue > smokeThres){
+    if (smokeValue > smokeThres && armSmoke){
       Serial.print("Pin A0: ");
       Serial.println(smokeValue);
       tone(buzzerPin, 1000, 200);  
-      if(armSmoke && !smokeTriggered){
+      if(!smokeTriggered){
         Serial.println("SMOKE DETECTED!!!");
         smokeTriggered = true;
         client.publish("home/office/esp1/smoke/notification", "SMOKE DETECTED");
