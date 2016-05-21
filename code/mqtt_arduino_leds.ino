@@ -34,9 +34,9 @@ PubSubClient client(ethClient);
 const int ledPin6 = 6;
 const int ledPin7 = 7;
 
-// This functions is executed when some device publishes a message to a topic that your ESP8266 is subscribed to
+// This functions is executed when some device publishes a message to a topic that your Arduino is subscribed to
 // Change the function below to add logic to your program, so when a device publishes a message to a topic that 
-// your ESP8266 is subscribed you can actually do something
+// your Arduino is subscribed you can actually do something
 void callback(char* topic, byte* message, unsigned int length) {
   Serial.print("Message arrived on topic: ");
   Serial.print(topic);
