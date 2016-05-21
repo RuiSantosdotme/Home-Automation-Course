@@ -163,15 +163,15 @@ void loop() {
 
     // Computes temperature values in Celsius
     float hic = dht.computeHeatIndex(t, h, false);
-    static char temperatureTemp[5];
+    static char temperatureTemp[6];
     dtostrf(hic, 6, 2, temperatureTemp);
     
     // Uncomment to compute temperature values in Fahrenheit 
     // float hif = dht.computeHeatIndex(f, h);
-    // static char temperatureTemp[5];
+    // static char temperatureTemp[6];
     // dtostrf(hic, 6, 2, temperatureTemp);
     
-    static char humidityTemp[5];
+    static char humidityTemp[6];
     dtostrf(h, 6, 2, humidityTemp);
 
     // Publishes Temperature and Humidity values
