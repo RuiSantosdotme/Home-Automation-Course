@@ -165,7 +165,7 @@ void loop(){
     // Publishes a new Temperature value
     client.publish("home/livingroom/arduino/temperature", temperatureTemp);
   }
-  // Publishes new LDR value every 10 seconds
+  // Publishes new LDR value every 1000 milliseconds
   if ((now - lastLDRCheck) > 1000) {
     lastLDRCheck = now;  
     int LDRValue = analogRead(LDRAnalogPin);
