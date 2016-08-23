@@ -1,3 +1,10 @@
+/*****
+ 
+ All the resources for this project:
+ https://rntlab.com/
+ 
+*****/
+
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 // Loading the RCSwitch library to control the outlets
