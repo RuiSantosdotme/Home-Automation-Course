@@ -27,7 +27,7 @@ IPAddress ip(192, 168, 1, 99);
 // Replace with your Raspberry Pi IP Address. In my case, the RPi IP Address is 192.168.1.76
 IPAddress server(192, 168, 1, 76);
 
-// Initializes the espClient. You have to change the espClient name if you have multiple ESPs running in your home automation system
+// Initializes the ethClient. You have to change the ethClient name if you have multiple ESPs running in your home automation system
 EthernetClient ethClient;
 PubSubClient client(ethClient);
 
