@@ -41,11 +41,17 @@ DHT dht(DHTPin, DHTTYPE);
 int smokeThres = 60;
 
 // Control Variables
+boolean armMotion = false;
 boolean armSmoke = false;
 boolean smokeTriggered = false;
+boolean motionTriggered = false;
+
+// PIR Motion Sensor
+const int motionSensor = 4;
 
 // Status LEDs
 const int smokeLED = 13;
+const int motionLED = 12;
 
 // Buzzer
 const int buzzerPin = 14;
@@ -131,6 +137,25 @@ void callback(String topic, byte* message, unsigned int length) {
         digitalWrite(smokeLED, LOW);
       }
    }
+   if(topic=="home/office/esp1/motion"){
+      Serial.print("MOTION SENSOR STATUS CHANGE");
+      if(messageTemp == "1"){
+        Serial.print("Motion Sensor Armed");
+        client.publish("home/office/esp1/motion/status", "Armed");
+        client.publish("home/office/esp1/motion/notification", "NO MOTION");
+        armMotion = true;
+        motionTriggered = false;
+        digitalWrite(motionLED, HIGH);
+      }
+      else if(messageTemp == "0"){
+        Serial.print("Motion Sensor Not Armed");
+        client.publish("home/office/esp1/motion/status", "Not Armed");
+        client.publish("home/office/esp1/motion/notification", "NO MOTION");
+        armMotion=false;
+        motionTriggered = false;
+        digitalWrite(motionLED, LOW);
+      }
+   }
   Serial.println();
 }
 
@@ -141,7 +166,6 @@ void reconnect() {
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
     // Attempt to connect
-    
     /*
      YOU MIGHT NEED TO CHANGE THIS LINE, IF YOU'RE HAVING PROBLEMS WITH MQTT MULTIPLE CONNECTIONS
      To change the ESP device ID, you will have to give a new name to the ESP8266.
@@ -151,19 +175,22 @@ void reconnect() {
        if (client.connect("ESP1_Office")) {
      Then, for the other ESP:
        if (client.connect("ESP2_Garage")) {
-
       That should solve your MQTT multiple connections problem
     */
     if (client.connect("ESP8266Client")) {
       Serial.println("connected");  
       // Once connected, publish an announcement...
       client.publish("home/office/esp1/smoke/status", "Not Armed");
+      client.publish("home/office/esp1/motion/status", "Not Armed");
       client.publish("home/office/esp1/smoke/notification", "NO SMOKE");
+      client.publish("home/office/esp1/motion/notification", "NO MOTION");
       // Subscribe or resubscribe to a topic
       // You can subscribe to more topics (to control more LEDs in this example)
       client.subscribe("home/office/esp1/desk");
       client.subscribe("home/office/esp1/workbench");
-      client.subscribe("home/office/esp1/smoke"); 
+      client.subscribe("home/office/esp1/smoke");
+      client.subscribe("home/office/esp1/motion");
+      
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
@@ -174,15 +201,25 @@ void reconnect() {
   }
 }
 
+// Checks motion
+void detectsMovement() {
+  if (armMotion && !motionTriggered) {
+    Serial.println("MOTION DETECTED!!!");
+    motionTriggered = true;
+    client.publish("home/office/esp1/motion/notification", "MOTION DETECTED");
+  }
+}
+
 // The setup function sets your ESP GPIOs to Outputs, starts the serial communication at a baud rate of 115200
 // Sets your mqtt broker and sets the callback function
 // The callback function is what receives messages and actually controls the LEDs
 void setup() {
   pinMode(smokeLED, OUTPUT);
+  pinMode(motionLED, OUTPUT);
   pinMode(buzzerPin, OUTPUT);
 
   pinMode(smokePin, INPUT);
-
+  attachInterrupt(digitalPinToInterrupt(motionSensor), detectsMovement, RISING);
   dht.begin();
   
   Serial.begin(115200);
@@ -191,7 +228,7 @@ void setup() {
   client.setCallback(callback);
 
   mySwitch.enableTransmit(16);
-  
+    
   // SET YOUR PULSE LENGTH
   mySwitch.setPulseLength(REPLACE_WITH_YOUR_PULSE_LENGTH);
   
@@ -210,6 +247,7 @@ void loop() {
   }
   if(!client.loop())
     client.connect("espClient");
+  
   now = millis();
   // Publishes new temperature and humidity every 30 seconds
   if (now - lastMeasure > 30000) {
@@ -229,15 +267,15 @@ void loop() {
 
     // Computes temperature values in Celsius
     float hic = dht.computeHeatIndex(t, h, false);
-    static char temperatureTemp[7];
+    static char temperatureTemp[6];
     dtostrf(hic, 6, 2, temperatureTemp);
     
     // Uncomment to compute temperature values in Fahrenheit 
     // float hif = dht.computeHeatIndex(f, h);
-    // static char temperatureTemp[7];
+    // static char temperatureTemp[6];
     // dtostrf(hic, 6, 2, temperatureTemp);
     
-    static char humidityTemp[7];
+    static char humidityTemp[6];
     dtostrf(h, 6, 2, humidityTemp);
 
     // Publishes Temperature and Humidity values
