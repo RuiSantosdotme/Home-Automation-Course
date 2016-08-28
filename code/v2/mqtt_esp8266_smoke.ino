@@ -23,7 +23,7 @@ const char* password = "YOUR_PASSWORD";
 // Change the variable to your Raspberry Pi IP address, so it connects to your MQTT broker
 const char* mqtt_server = "YOUR_RPi_IP_Address";
 
-// Initializes the espClient. You have to change the espClient name if you have multiple ESPs running in your home automation system
+// Initializes the espClient. You should change the espClient name if you have multiple ESPs running in your home automation system
 WiFiClient espClient;
 PubSubClient client(espClient);
 
@@ -141,6 +141,17 @@ void reconnect() {
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
     // Attempt to connect
+    /*
+     YOU MIGHT NEED TO CHANGE THIS LINE, IF YOU'RE HAVING PROBLEMS WITH MQTT MULTIPLE CONNECTIONS
+     To change the ESP device ID, you will have to give a new name to the ESP8266.
+     Here's how it looks:
+       if (client.connect("ESP8266Client")) {
+     You can do it like this:
+       if (client.connect("ESP1_Office")) {
+     Then, for the other ESP:
+       if (client.connect("ESP2_Garage")) {
+      That should solve your MQTT multiple connections problem
+    */
     if (client.connect("ESP8266Client")) {
       Serial.println("connected");  
       // Once connected, publish an announcement...
