@@ -139,7 +139,7 @@ void loop(){
     reconnect();
   }
   if(!client.loop())
-    client.connect("ethClient");
+    client.connect("arduinoClient");
   now = millis();
   // Publishes new temperature and humidity every 10 seconds
   if (now - lastMeasure > 10000) {
