@@ -157,5 +157,5 @@ void loop() {
     reconnect();
   }
   if(!client.loop())
-    client.connect("espClient");
+    client.connect("ESP8266Client");
 }
