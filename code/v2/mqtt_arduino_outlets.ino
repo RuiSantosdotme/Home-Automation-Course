@@ -133,5 +133,5 @@ void loop()
     reconnect();
   }
   if(!client.loop())
-    client.connect("ethClient");
+    client.connect("arduinoClient");
 }
