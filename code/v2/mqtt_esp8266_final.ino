@@ -246,7 +246,7 @@ void loop() {
     reconnect();
   }
   if(!client.loop())
-    client.connect("espClient");
+    client.connect("ESP8266Client");
   
   now = millis();
   // Publishes new temperature and humidity every 30 seconds
