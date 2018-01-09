@@ -190,11 +190,11 @@ void setup() {
 
   mySwitch.enableTransmit(16);
   
-  // SET YOUR PULSE LENGTH
-  mySwitch.setPulseLength(REPLACE_WITH_YOUR_PULSE_LENGTH);
-  
   // SET YOUR PROTOCOL (default is 1, will work for most outlets)
   mySwitch.setProtocol(REPLACE_WITH_YOUR_PROTOCOL);
+
+   // SET YOUR PULSE LENGTH
+  mySwitch.setPulseLength(REPLACE_WITH_YOUR_PULSE_LENGTH);
   
   // Set number of transmission repetitions.
   mySwitch.setRepeatTransmit(15);
