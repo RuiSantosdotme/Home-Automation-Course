@@ -202,7 +202,7 @@ void reconnect() {
 }
 
 // Checks motion
-void detectsMovement() {
+void ICACHE_RAM_ATTR detectsMovement() {
   if (armMotion && !motionTriggered) {
     Serial.println("MOTION DETECTED!!!");
     motionTriggered = true;
